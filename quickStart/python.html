@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Basics</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.28.0/components/prism-python.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 1em 0;
+            margin-bottom: 20px;
+        }
+        h1 {
+            margin: 0;
+        }
+        main {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        details {
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fff;
+        }
+        summary {
+            font-weight: bold;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-bottom: 1px solid #ddd;
+        }
+        summary:hover {
+            background-color: #e1e1e1;
+        }
+        pre {
+            background-color: #2d2d2d;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Python Basics</h1>
+    </header>
+    <main>
+        <details>
+            <summary>Classes and Instances</summary>
+            <pre><code class="language-python">
+# Define a class
+class MyClass:
+    # Constructor
+    def __init__(self, attribute1, attribute2):
+        self.attribute1 = attribute1
+        self.attribute2 = attribute2
+    
+    # Method
+    def my_method(self):
+        return self.attribute1 + self.attribute2
+
+# Create an instance of the class
+instance = MyClass(10, 20)
+print(instance.my_method())  # Output: 30
+            </code></pre>
+        </details>
+
+        <details>
+            <summary>Arrays (Lists)</summary>
+            <pre><code class="language-python">
+# Create a list
+my_list = [1, 2, 3, 4, 5]
+
+# Access elements
+print(my_list[0])  # Output: 1
+
+# Modify elements
+my_list[1] = 20
+
+# Append elements
+my_list.append(6)
+
+# Iterate through a list
+for element in my_list:
+    print(element)
+            </code></pre>
+        </details>
+
+        <details>
+            <summary>Sets</summary>
+            <pre><code class="language-python">
+# Create a set
+my_set = {1, 2, 3, 4, 5}
+
+# Add elements
+my_set.add(6)
+
+# Remove elements
+my_set.remove(3)
+
+# Check membership
+print(2 in my_set)  # Output: True
+
+# Iterate through a set
+for element in my_set:
+    print(element)
+            </code></pre>
+        </details>
+
+        <details>
+            <summary>Hash Tables (Dictionaries)</summary>
+            <pre><code class="language-python">
+# Create a dictionary
+my_dict = {'key1': 'value1', 'key2': 'value2'}
+
+# Access elements
+print(my_dict['key1'])  # Output: value1
+
+# Modify elements
+my_dict['key1'] = 'new_value1'
+
+# Add new key-value pairs
+my_dict['key3'] = 'value3'
+
+# Iterate through a dictionary
+for key, value in my_dict.items():
+    print(f'{key}: {value}')
+            </code></pre>
+        </details>
+
+        <details>
+            <summary>Functions</summary>
+            <pre><code class="language-python">
+# Define a function
+def my_function(param1, param2):
+    return param1 + param2
+
+# Call a function
+result = my_function(10, 20)
+print(result)  # Output: 30
+            </code></pre>
+        </details>
+
+        <details>
+            <summary>If Statements</summary>
+            <pre><code class="language-python">
+# If statement
+if condition:
+    # Code to execute if condition is True
+elif another_condition:
+    # Code to execute if another_condition is True
+else:
+    # Code to execute if all conditions are False
+            </code></pre>
+        </details>
+
+        <details>
+            <summary>For Loops</summary>
+            <pre><code class="language-python">
+# For loop
+for i in range(5):
+    print(i)  # Output: 0 1 2 3 4
+
+# Iterate through a list
+for element in my_list:
+    print(element)
+            </code></pre>
+        </details>
+
+        <details>
+            <summary>While Loops</summary>
+            <pre><code class="language-python">
+# While loop
+count = 0
+while count < 5:
+    print(count)  # Output: 0 1 2 3 4
+    count += 1
+            </code></pre>
+        </details>
+
+        <details>
+            <summary>Control Statements: Skip (continue), Break, Return</summary>
+            <pre><code class="language-python">
+# Skip (continue)
+for i in range(5):
+    if i == 2:
+        continue  # Skip the rest of the code in this iteration
+    print(i)  # Output: 0 1 3 4
+
+# Break
+for i in range(5):
+    if i == 2:
+        break  # Exit the loop
+    print(i)  # Output: 0 1
+
+# Return
+def my_function(param):
+    if param < 0:
+        return  # Exit the function
+    return param * 2
+
+print(my_function(10))  # Output: 20
+print(my_function(-1))  # Output: None
+            </code></pre>
+        </details>
+    </main>
+</body>
+</html>
