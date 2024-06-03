@@ -47,11 +47,15 @@
         summary:hover {
             background-color: #e1e1e1;
         }
+        details details {
+            margin-left: 20px;
+        }
         pre {
             background-color: #2d2d2d;
             padding: 15px;
             border-radius: 5px;
             overflow-x: auto;
+            margin: 0;
         }
     </style>
 </head>
@@ -61,9 +65,51 @@
     </header>
     <main>
         <details>
+            <summary>Variables and Constants</summary>
+            <details>
+                <summary>Variables</summary>
+                <pre><code class="language-python"># Variables
+x = 10
+y = 20
+z = x + y</code></pre>
+            </details>
+            <details>
+                <summary>Constants</summary>
+                <pre><code class="language-python"># Constants
+PI = 3.14159
+GRAVITY = 9.8
+
+# Note: In Python, constants are usually named in all caps, but they can still be modified.
+# There is no true constant declaration in Python.</code></pre>
+            </details>
+        </details>
+
+        <details>
+            <summary>Reference Types vs. Value Types</summary>
+            <pre><code class="language-python"># Value types (immutable types)
+# Examples: int, float, bool, string, tuple, frozenset
+a = 10
+b = a
+b = 20
+print(a)  # Output: 10
+print(b)  # Output: 20
+
+# Reference types (mutable types)
+# Examples: list, set, dict
+list1 = [1, 2, 3]
+list2 = list1
+list2.append(4)
+print(list1)  # Output: [1, 2, 3, 4]
+print(list2)  # Output: [1, 2, 3, 4]
+
+# Explanation:
+# - Value types: Changes to one variable do not affect another.
+# - Reference types: Changes to one variable affect the other, as they refer to the same object.</code></pre>
+        </details>
+
+        <details>
             <summary>Classes and Instances</summary>
-            <pre><code class="language-python">
-# Define a class
+            <pre><code class="language-python"># Define a class
 class MyClass:
     # Constructor
     def __init__(self, attribute1, attribute2):
@@ -76,13 +122,15 @@ class MyClass:
 
 # Create an instance of the class
 instance = MyClass(10, 20)
-print(instance.my_method())  # Output: 30
-            </code></pre>
+print(instance.my_method())  # Output: 30</code></pre>
         </details>
 
         <details>
-            <summary>Arrays (Lists)</summary>
-            <pre><code class="language-python"># Create a list
+            <summary>Data Structures</summary>
+            <details>
+                <summary>Arrays (Lists)</summary>
+                <pre><code class="language-python"># Arrays (Lists)
+# Create a list
 my_list = [1, 2, 3, 4, 5]
 
 # Access elements
@@ -97,11 +145,11 @@ my_list.append(6)
 # Iterate through a list
 for element in my_list:
     print(element)</code></pre>
-        </details>
-
-        <details>
-            <summary>Sets</summary>
-            <pre><code class="language-python"># Create a set
+            </details>
+            <details>
+                <summary>Sets</summary>
+                <pre><code class="language-python"># Sets
+# Create a set
 my_set = {1, 2, 3, 4, 5}
 
 # Add elements
@@ -116,11 +164,11 @@ print(2 in my_set)  # Output: True
 # Iterate through a set
 for element in my_set:
     print(element)</code></pre>
-        </details>
-
-        <details>
-            <summary>Hash Tables (Dictionaries)</summary>
-            <pre><code class="language-python"># Create a dictionary
+            </details>
+            <details>
+                <summary>Hash Tables (Dictionaries)</summary>
+                <pre><code class="language-python"># Hash Tables (Dictionaries)
+# Create a dictionary
 my_dict = {'key1': 'value1', 'key2': 'value2'}
 
 # Access elements
@@ -135,6 +183,7 @@ my_dict['key3'] = 'value3'
 # Iterate through a dictionary
 for key, value in my_dict.items():
     print(f'{key}: {value}')</code></pre>
+            </details>
         </details>
 
         <details>
@@ -149,39 +198,40 @@ print(result)  # Output: 30</code></pre>
         </details>
 
         <details>
-            <summary>If Statements</summary>
-            <pre><code class="language-python"># If statement
+            <summary>Control Statements</summary>
+            <details>
+                <summary>If Statements</summary>
+                <pre><code class="language-python"># If Statements
 if condition:
     # Code to execute if condition is True
 elif another_condition:
     # Code to execute if another_condition is True
 else:
     # Code to execute if all conditions are False</code></pre>
-        </details>
-
-        <details>
-            <summary>For Loops</summary>
-            <pre><code class="language-python"># For loop
+            </details>
+            <details>
+                <summary>For Loops</summary>
+                <pre><code class="language-python"># For Loops
+# For loop
 for i in range(5):
     print(i)  # Output: 0 1 2 3 4
 
 # Iterate through a list
 for element in my_list:
     print(element)</code></pre>
-        </details>
-
-        <details>
-            <summary>While Loops</summary>
-            <pre><code class="language-python"># While loop
+            </details>
+            <details>
+                <summary>While Loops</summary>
+                <pre><code class="language-python"># While Loops
+# While loop
 count = 0
 while count < 5:
     print(count)  # Output: 0 1 2 3 4
     count += 1</code></pre>
-        </details>
-
-        <details>
-            <summary>Control Statements: Skip (continue), Break, Return</summary>
-            <pre><code class="language-python"># Skip (continue)
+            </details>
+            <details>
+                <summary>Skip (continue), Break, Return</summary>
+                <pre><code class="language-python"># Skip (continue)
 for i in range(5):
     if i == 2:
         continue  # Skip the rest of the code in this iteration
@@ -201,6 +251,7 @@ def my_function(param):
 
 print(my_function(10))  # Output: 20
 print(my_function(-1))  # Output: None</code></pre>
+            </details>
         </details>
     </main>
 </body>
