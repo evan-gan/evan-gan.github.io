@@ -85,6 +85,7 @@ function dropRandomDino(div) {
         });
 }
 //Test
+//Test 2
 
 //Mouse pos stuff
 // let mousePosition = { x: 0, y: 0 };
