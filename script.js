@@ -84,7 +84,7 @@ function dropRandomDino(div) {
             console.error('Error loading images:', error);
         });
 }
-
+//Test
 
 //Mouse pos stuff
 // let mousePosition = { x: 0, y: 0 };
