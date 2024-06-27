@@ -86,6 +86,7 @@ function dropRandomDino(div) {
 }
 //Test
 //Test 2
+//Test 3 does it work?
 
 //Mouse pos stuff
 // let mousePosition = { x: 0, y: 0 };
