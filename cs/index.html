@@ -1,3 +1,155 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countdown Timer</title>
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #282c34;
+            color: #ffffff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        #input-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #countdown {
+            font-size: 15vw; /* Initial placeholder size */
+            font-weight: bold;
+            margin: 0;
+        }
+
+        input,
+        button {
+            margin: 10px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+
+        button {
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="input-container" style="display:none;">
+        <h1>Set Countdown</h1>
+        <input type="datetime-local" id="time-input">
+        <button id="confirm-button">Start Countdown</button>
+    </div>
+    <div id="countdown" style="display:none;"></div>
+
+    <script>
+        function refreshPage() {
+            setTimeout(function () {
+                // Do Something Here
+                // Then recall the parent function to
+                // create a recursive loop.
+                window.location.reload(true);
+                refreshPage();
+            }, 5000);
+        }
+        refreshPage()
+
+        const inputContainer = document.getElementById('input-container');
+        const countdownDisplay = document.getElementById('countdown');
+        const timeInput = document.getElementById('time-input');
+        const confirmButton = document.getElementById('confirm-button');
+
+        // Helper to parse URL parameters
+        function getUrlParam(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+
+        // Dynamically adjust font size to fill viewport
+        function updateFontSize() {
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const fontSize = Math.min(viewportWidth, viewportHeight) * 0.3; // 10% of smaller dimension
+            countdownDisplay.style.fontSize = `${fontSize}px`;
+        }
+
+        // Show the countdown
+        function startCountdown(targetTime) {
+            inputContainer.style.display = 'none';
+            countdownDisplay.style.display = 'block';
+            console.log("Test")
+            const updateCountdown = () => {
+                const now = Date.now();
+                const timeRemaining = targetTime - now;
+
+                if (timeRemaining <= 0) {
+                    countdownDisplay.textContent = "Time's up!";
+                    clearInterval(timer);
+                    return;
+                }
+
+                const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+                countdownDisplay.textContent =
+                    (days > 0 ? `${days}d ` : '') +
+                    (hours > 0 ? `${hours}h ` : '') +
+                    (minutes > 0 ? `${minutes}m ` : '') +
+                    `${seconds}s`;
+
+                    updateFontSize();
+            };
+
+            window.addEventListener('resize', updateFontSize); // Adjust font size on resize
+            updateCountdown();
+            const timer = setInterval(updateCountdown, 1000);
+        }
+
+        // Check for time in URL
+        const timeParam = getUrlParam('time');
+        if (timeParam) {
+            const targetTime = new Date(timeParam).getTime();
+            if (!isNaN(targetTime)) {
+                startCountdown(targetTime);
+            } else {
+                alert('Invalid time in URL parameter!');
+                inputContainer.style.display = 'flex';
+            }
+        } else {
+            inputContainer.style.display = 'flex';
+        }
+
+        // Start countdown on button click
+        confirmButton.addEventListener('click', () => {
+            const targetTime = new Date(timeInput.value).getTime();
+            if (isNaN(targetTime)) {
+                alert('Please enter a valid date and time!');
+                return;
+            }
+
+            // Update URL with the time parameter
+            const newUrl = new URL(window.location);
+            newUrl.searchParams.set('time', timeInput.value);
+            window.history.pushState({}, '', newUrl);
+
+            startCountdown(targetTime);
+        });
+    </script>
+</body>
+
+</html> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,9 +178,19 @@
         }
 
         #countdown {
+            font-size: 10vw;
+            /* Placeholder size */
             font-weight: bold;
+            margin: 0;
             white-space: nowrap;
-            height: 15vh;
+        }
+
+        #hidden-measure {
+            visibility: hidden;
+            position: absolute;
+            white-space: nowrap;
+            font-size: 1px;
+            /* Initial size */
         }
 
         input,
@@ -51,10 +213,9 @@
         <button id="confirm-button">Start Countdown</button>
     </div>
     <div id="countdown" style="display:none;"></div>
+    <div id="hidden-measure"></div>
 
     <script>
-
-
         function refreshPage() {
             setTimeout(function () {
                 // Do Something Here
@@ -64,9 +225,10 @@
                 refreshPage();
             }, 5000);
         }
-
+        refreshPage()
         const inputContainer = document.getElementById('input-container');
         const countdownDisplay = document.getElementById('countdown');
+        const hiddenMeasure = document.getElementById('hidden-measure');
         const timeInput = document.getElementById('time-input');
         const confirmButton = document.getElementById('confirm-button');
 
@@ -76,17 +238,25 @@
             return params.get(name);
         }
 
+        // Dynamically adjust font size to fill viewport width
+        function updateFontSize() {
+            const viewportWidth = window.innerWidth;
+            hiddenMeasure.style.fontSize = "1px"; // Start with a base font size
+            hiddenMeasure.textContent = countdownDisplay.textContent; // Match text content
+
+            // Measure the text width with current font size
+            const textWidth = hiddenMeasure.offsetWidth;
+
+            // Calculate font size to fill width
+            const fontSize = viewportWidth / textWidth;
+
+            countdownDisplay.style.fontSize = `${fontSize}px`;
+        }
+
         // Show the countdown
         function startCountdown(targetTime) {
             inputContainer.style.display = 'none';
             countdownDisplay.style.display = 'block';
-
-            const updateFontSize = () => {
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
-                const fontSize = Math.min(viewportWidth, viewportHeight) * 0.1;
-                countdownDisplay.style.fontSize = `${fontSize}px`;
-            };
 
             const updateCountdown = () => {
                 const now = Date.now();
@@ -95,6 +265,7 @@
                 if (timeRemaining <= 0) {
                     countdownDisplay.textContent = "Time's up!";
                     clearInterval(timer);
+                    updateFontSize();
                     return;
                 }
 
@@ -108,13 +279,13 @@
                     (hours > 0 ? `${hours}h ` : '') +
                     (minutes > 0 ? `${minutes}m ` : '') +
                     `${seconds}s`;
+
+                updateFontSize();
             };
 
-            updateFontSize();
-            window.addEventListener('resize', updateFontSize);
             updateCountdown();
+            window.addEventListener('resize', updateFontSize); // Adjust font size on resize
             const timer = setInterval(updateCountdown, 1000);
-            refreshPage()
         }
 
         // Check for time in URL
