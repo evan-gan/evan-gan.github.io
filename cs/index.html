@@ -54,16 +54,15 @@
     <script>
 
 
-        function timeout() {
+        function refreshPage() {
             setTimeout(function () {
                 // Do Something Here
                 // Then recall the parent function to
                 // create a recursive loop.
                 window.location.reload(true);
-                timeout();
+                refreshPage();
             }, 5000);
         }
-        timeout()
 
         const inputContainer = document.getElementById('input-container');
         const countdownDisplay = document.getElementById('countdown');
@@ -114,6 +113,7 @@
             window.addEventListener('resize', updateFontSize);
             updateCountdown();
             const timer = setInterval(updateCountdown, 1000);
+            refreshPage()
         }
 
         // Check for time in URL
