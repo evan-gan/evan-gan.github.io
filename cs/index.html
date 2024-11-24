@@ -119,8 +119,20 @@
             const width = window.innerWidth;
             const height = window.innerHeight;
 
-            if (position.x + rect.width >= width || position.x <= 0) direction.dx *= -1;
-            if (position.y + rect.height >= height || position.y <= 0) direction.dy *= -1;
+            // if (position.x + rect.width >= width || position.x <= 0) direction.dx *= -1;
+            // if (position.y + rect.height >= height || position.y <= 0) direction.dy *= -1;
+            if (position.x + rect.width >= width) {
+                direction.dx = -Math.abs(direction.dx); // Ensure it's moving left
+            } else if (position.x <= 0) {
+                direction.dx = Math.abs(direction.dx); // Ensure it's moving right
+            }
+
+            if (position.y + rect.height >= height) {
+                direction.dy = -Math.abs(direction.dy); // Ensure it's moving up
+            } else if (position.y <= 0) {
+                direction.dy = Math.abs(direction.dy); // Ensure it's moving down
+            }
+
 
             position.x += direction.dx;
             position.y += direction.dy;
