@@ -64,6 +64,7 @@
 
 <body>
     <div id="countdown" style="display: none;">0s</div>
+    <img id="plane" src="./OrpheusPlane.png" style="display: none;">
 
     <div id="time-picker">
         <label for="time-input">Select a countdown time:</label>
@@ -80,6 +81,7 @@
         const timePicker = document.getElementById('time-picker');
         const timeInput = document.getElementById('time-input');
         const startButton = document.getElementById('start-countdown');
+        const plane = document.getElementById('plane');
 
         // Function to get URL parameters
         function getUrlParam(name) {
@@ -152,6 +154,45 @@
             // Alternate text size
             scale = Math.clamp((1 + Math.sin(Date.now() * sizeChangeRate) * 0.25), 0.75, 1.25); // Scale between 0.75 and 1.25
             countdownDisplay.style.transform += ` scale(${scale})`;
+            movePlane();
+        }
+
+        function movePlane() {
+            const rect = plane.getBoundingClientRect();
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            // if (position.x + rect.width >= width || position.x <= 0) direction.dx *= -1;
+            // if (position.y + rect.height >= height || position.y <= 0) direction.dy *= -1;
+            if (position.x + rect.width >= width) {
+                direction.dx = -Math.abs(direction.dx); // Ensure it's moving left
+            } else if (position.x <= 0) {
+                direction.dx = Math.abs(direction.dx); // Ensure it's moving right
+            }
+
+            if (position.y + rect.height >= height) {
+                direction.dy = -Math.abs(direction.dy); // Ensure it's moving up
+            } else if (position.y <= 0) {
+                direction.dy = Math.abs(direction.dy); // Ensure it's moving down
+            }
+
+
+            position.x += direction.dx;
+            position.y += direction.dy;
+
+            plane.style.left = `${position.x}px`;
+            plane.style.top = `${position.y}px`;
+
+            // Apply rotation
+            angle += rotationRate / 1000; // Convert to radians per millisecond
+            plane.style.transform = `rotate(${angle}deg)`;
+
+            Math.clamp = function (num, min, max) {
+                return Math.min(Math.max(num, min), max);
+            };
+            // Alternate text size
+            scale = Math.clamp((1 + Math.sin(Date.now() * sizeChangeRate) * 0.25), 0.75, 1.25); // Scale between 0.75 and 1.25
+            plane.style.transform += ` scale(${scale})`;
         }
 
         // Initialize
@@ -165,6 +206,7 @@
                 // Hide the time picker and show the countdown
                 timePicker.style.display = 'none';
                 countdownDisplay.style.display = 'block';
+                plane.style.display = 'block';
 
                 countdownDisplay.style.left = `${position.x}px`;
                 countdownDisplay.style.top = `${position.y}px`;
@@ -194,6 +236,8 @@
             // Hide the time picker and show the countdown
             timePicker.style.display = 'none';
             countdownDisplay.style.display = 'block';
+            plane.style.display = 'block';
+
 
             countdownDisplay.style.left = `${position.x}px`;
             countdownDisplay.style.top = `${position.y}px`;
