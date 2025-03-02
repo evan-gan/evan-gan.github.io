@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Optimized QR Code Generator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+    }
+    #qrcode-img {
+      margin-top: 20px;
+      max-width: 100%;
+    }
+    input {
+      padding: 10px;
+      margin-bottom: 10px;
+      width: 300px;
+    }
+  </style>
+</head>
+<body>
+  <h1>QR Code Generator</h1>
+  <label for="text-input">Enter text to encode:</label>
+  <input type="text" id="text-input" placeholder="Type something...">
+  <img id="qrcode-img" alt="QR Code will appear here">
+
+  <!-- Include qrcode library -->
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script>
+    const qrImg = document.getElementById('qrcode-img');
+    const input = document.getElementById('text-input');
+
+    // Determine the optimal encoding mode for the input
+    function getOptimalEncoding(text) {
+      if (/^[0-9]+$/.test(text)) {
+        return 'numeric'; // Numeric mode
+      } else if (/^[A-Z0-9 $%*+\-./:]+$/.test(text)) {
+        return 'alphanumeric'; // Alphanumeric mode
+      } else {
+        return 'byte'; // Default to Byte mode for other input types
+      }
+    }
+
+    // Generate QR code and set it as an image source
+    async function generateQRCode(text) {
+      const size = 150; // QR code dimensions in pixels
+      const border = 3; // White border size in modules
+      const totalSize = size + 2 * border; // Including border
+
+      const options = {
+        width: totalSize,
+        margin: border,
+        errorCorrectionLevel: 'L', // Minimum error correction level
+        mode: getOptimalEncoding(text) // Select optimal mode
+      };
+
+      try {
+        const dataUrl = await QRCode.toDataURL(text || ' ', options); // Generate QR code as data URL
+        qrImg.src = dataUrl; // Set the image source
+      } catch (error) {
+        console.error('Error generating QR code:', error);
+      }
+    }
+
+    // Update QR code on input change
+    input.addEventListener('input', (event) => {
+      generateQRCode(event.target.value);
+    });
+
+    // Initial QR code
+    generateQRCode("");
+  </script>
+</body>
+</html>

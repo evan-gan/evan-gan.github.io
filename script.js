@@ -84,6 +84,7 @@ function dropRandomDino(div) {
             console.error('Error loading images:', error);
         });
 }
+
 //Test
 //Test 2
 //Test 3 does it work?
