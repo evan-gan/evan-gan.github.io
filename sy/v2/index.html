@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Galindo">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dynamic Countdown Timer</title>
+  <style>
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+      background-color: #000000;
+      font-family: "Galindo", sans-serif;
+    }
+
+    /* Countdown text container covers full screen */
+    .text-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .text {
+      font-size: 10px;
+      font-weight: bold;
+      white-space: nowrap;
+      color: white;
+    }
+
+    /* Picker container as a centered modal overlay */
+    #picker-container {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: rgba(255, 255, 255, 0.95);
+      padding: 20px;
+      border-radius: 8px;
+      z-index: 10;
+      text-align: center;
+    }
+
+    /* Basic styling for inputs and buttons */
+    #picker-container input,
+    #picker-container button {
+      font-size: 16px;
+      margin: 5px;
+    }
+  </style>
+</head>
+
+<body>
+  <div id="picker-container">
+    <div>
+      <label for="datetime">Select Date & Time:</label>
+      <input type="datetime-local" id="datetime">
+      <button onclick="submitDateTime()">Submit</button>
+    </div>
+    <div style="margin-top: 15px;">
+      <label for="duration">Select Duration (minutes):</label>
+      <input type="number" id="duration" min="1">
+      <button onclick="submitDuration()">Submit</button>
+    </div>
+  </div>
+
+  <div class="text-container">
+    <div class="text" id="countdown">Loading...</div>
+  </div>
+
+  <script>
+    const countdownDisplay = document.getElementById('countdown');
+    let timer;
+    let targetTime;
+
+    function formatTimeRemaining(timeRemaining) {
+      if (timeRemaining <= 0) {
+        return "Time's up!";
+      }
+      const days = Math.floor(timeRemaining / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+      return (days > 0 ? `${days}d ` : '') +
+        (hours > 0 ? `${hours}h ` : '') +
+        (minutes > 0 ? `${minutes}m ` : '') +
+        `${seconds}s`;
+    }
+
+    function adjustFontSize() {
+      const container = document.querySelector('.text-container');
+      const textElement = document.getElementById('countdown');
+      textElement.style.fontSize = '10px';
+      let fontSize = 10;
+      while (textElement.scrollWidth <= container.clientWidth &&
+        textElement.offsetHeight <= container.clientHeight) {
+        fontSize *= 2;
+        textElement.style.fontSize = fontSize + 'px';
+      }
+      let low = fontSize / 2;
+      let high = fontSize;
+      let mid;
+      while (high - low > 1) {
+        mid = Math.floor((low + high) / 2);
+        textElement.style.fontSize = mid + 'px';
+        if (textElement.scrollWidth <= container.clientWidth &&
+          textElement.offsetHeight <= container.clientHeight) {
+          low = mid;
+        } else {
+          high = mid;
+        }
+      }
+      textElement.style.fontSize = low + 'px';
+    }
+
+    function updateCountdown() {
+      const now = Date.now();
+      const timeRemaining = targetTime - now;
+      countdownDisplay.textContent = formatTimeRemaining(timeRemaining);
+      adjustFontSize();
+      if (timeRemaining <= 0) {
+        clearInterval(timer);
+      }
+    }
+
+    function startCountdown(newTargetTime) {
+      targetTime = newTargetTime;
+      timer = setInterval(updateCountdown, 1000);
+      window.addEventListener('resize', adjustFontSize);
+      updateCountdown();
+    }
+
+    function updateURLParam(target) {
+      const url = new URL(window.location);
+      url.searchParams.set('target', target);
+      window.history.pushState({}, '', url);
+    }
+
+    function submitDateTime() {
+      const datetimeInput = document.getElementById("datetime").value;
+      if (!datetimeInput) {
+        alert("Please select a valid date and time.");
+        return;
+      }
+      const selectedTime = new Date(datetimeInput).getTime();
+      document.getElementById("picker-container").style.display = "none";
+      updateURLParam(selectedTime);
+      startCountdown(selectedTime);
+    }
+
+    function submitDuration() {
+      const durationInput = document.getElementById("duration").value;
+      if (!durationInput || durationInput <= 0) {
+        alert("Please enter a valid duration.");
+        return;
+      }
+      const selectedTime = Date.now() + durationInput * 60000;
+      document.getElementById("picker-container").style.display = "none";
+      updateURLParam(selectedTime);
+      startCountdown(selectedTime);
+    }
+
+    // Check for a "target" URL parameter on load
+    const urlParams = new URLSearchParams(window.location.search);
+    const targetParam = urlParams.get('target');
+    if (targetParam && !isNaN(Number(targetParam))) {
+      const target = Number(targetParam);
+      document.getElementById("picker-container").style.display = "none";
+      startCountdown(target);
+    }
+
+    // ----- Random Google Font Changer with Pre-load and Font Effect -----
+    const googleFonts = [
+      "Blaka Ink",
+      "Nabla",
+      "Sixtyfour Convergence",
+      "Honk",
+      "Bungee Tint",
+      "Bungee Spice",
+      "Kalnia Glaze",
+      "Foldit"
+    ];
+
+    function getRandomFont() {
+      const index = Math.floor(Math.random() * googleFonts.length);
+      return googleFonts[index];
+    }
+
+    // Preload fonts by appending hidden link elements
+    const preloadContainer = document.createElement("div");
+    preloadContainer.style.display = "none";
+    document.body.appendChild(preloadContainer);
+
+    function preloadFont(font) {
+      const fontQuery = font.replace(/ /g, "+");
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = `https://fonts.googleapis.com/css?family=${fontQuery}`;
+      preloadContainer.appendChild(link);
+    }
+
+    // Preload all fonts in the list
+    googleFonts.forEach(preloadFont);
+
+    function updateFont() {
+      const font = getRandomFont();
+      let fontLink = document.getElementById("dynamic-font");
+      if (!fontLink) {
+        fontLink = document.createElement("link");
+        fontLink.id = "dynamic-font";
+        fontLink.rel = "stylesheet";
+        document.head.appendChild(fontLink);
+      }
+      const fontQuery = font.replace(/ /g, "+");
+      fontLink.href = `https://fonts.googleapis.com/css?family=${fontQuery}`;
+
+      // Wait for the font to load before applying it and adjusting the font size
+      document.fonts.load(`1em "${font}"`).then(() => {
+        countdownDisplay.style.fontFamily = font;
+        adjustFontSize();
+      });
+    }
+
+    // Change font every 10 seconds (after preloading, then update font when loaded)
+    setInterval(updateFont, 5000);
+    updateFont();
+  </script>
+</body>
+
+</html>
