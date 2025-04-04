@@ -1,0 +1,148 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+}
+
+.container {
+    width: 100%;
+    height: 100vh;
+    padding: 10px;
+    background-color: #f5f5f5;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1fr 10px 1fr;
+    grid-template-rows: 1fr 10px 1fr;
+    width: 100%;
+    height: 100%;
+    background-color: #ddd;
+    position: relative;
+}
+
+/* Grid positioning for each cell */
+#cell0 {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+#cell1 {
+    grid-column: 3;
+    grid-row: 1;
+}
+
+#cell2 {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+#cell3 {
+    grid-column: 3;
+    grid-row: 3;
+}
+
+/* Resizer positioning */
+#v-resize {
+    grid-column: 2;
+    grid-row: 1 / span 3;
+    cursor: ew-resize;
+    background-color: #ccc;
+    z-index: 10;
+}
+
+#h-resize {
+    grid-column: 1 / span 3;
+    grid-row: 2;
+    cursor: ns-resize;
+    background-color: #ccc;
+    z-index: 10;
+}
+
+.intersection-resizer {
+    grid-column: 2;
+    grid-row: 2;
+    background-color: #aaa;
+    cursor: move;
+    z-index: 20;
+}
+
+.v-resizer:hover, .h-resizer:hover, .intersection-resizer:hover {
+    background-color: #999;
+}
+
+.cell {
+    background-color: white;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+}
+
+.url-input-container {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    background-color: #f9f9f9;
+}
+
+.url-input {
+    width: 90%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.load-url-btn {
+    padding: 8px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.load-url-btn:hover {
+    background-color: #45a049;
+}
+
+iframe.frame {
+    border: none;
+    width: 100%;
+    height: 100%;
+    flex-grow: 1;
+}
+
+.hidden {
+    display: none;
+}
+
+.reload-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    z-index: 10;
+    font-size: 12px;
+}
+
+.reload-btn:hover {
+    background-color: #e8e8e8;
+}

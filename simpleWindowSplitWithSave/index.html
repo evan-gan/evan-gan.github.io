@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2x2 Resizable Iframe Grid</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="grid">
+            <!-- Top-left cell -->
+            <div class="cell" id="cell0">
+                <div class="url-input-container">
+                    <input type="text" class="url-input" placeholder="Enter URL (e.g., https://example.com)">
+                    <button class="load-url-btn">Load</button>
+                </div>
+                <iframe class="frame hidden"></iframe>
+            </div>
+            
+            <!-- Top-right cell -->
+            <div class="cell" id="cell1">
+                <div class="url-input-container">
+                    <input type="text" class="url-input" placeholder="Enter URL (e.g., https://example.com)">
+                    <button class="load-url-btn">Load</button>
+                </div>
+                <iframe class="frame hidden"></iframe>
+            </div>
+            
+            <!-- Bottom-left cell -->
+            <div class="cell" id="cell2">
+                <div class="url-input-container">
+                    <input type="text" class="url-input" placeholder="Enter URL (e.g., https://example.com)">
+                    <button class="load-url-btn">Load</button>
+                </div>
+                <iframe class="frame hidden"></iframe>
+            </div>
+            
+            <!-- Bottom-right cell -->
+            <div class="cell" id="cell3">
+                <div class="url-input-container">
+                    <input type="text" class="url-input" placeholder="Enter URL (e.g., https://example.com)">
+                    <button class="load-url-btn">Load</button>
+                </div>
+                <iframe class="frame hidden"></iframe>
+            </div>
+            
+            <!-- Vertical resizer (spans entire height) -->
+            <div class="v-resizer" id="v-resize"></div>
+            
+            <!-- Horizontal resizer (spans entire width) -->
+            <div class="h-resizer" id="h-resize"></div>
+            
+            <!-- Intersection point -->
+            <div class="intersection-resizer"></div>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
