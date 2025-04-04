@@ -3,58 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>2x2 Resizable Iframe Grid</title>
+    <title>FRC Viewing Dashboard</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <div class="grid">
-            <!-- Top-left cell -->
-            <div class="cell" id="cell0">
-                <div class="url-input-container">
-                    <input type="text" class="url-input" placeholder="Enter URL (e.g., https://example.com)">
-                    <button class="load-url-btn">Load</button>
+    <div id="setup-container" class="active">
+        <div class="setup-content">
+            <h1>FRC Viewing Dashboard</h1>
+            <p>Enter information to set up your dashboard</p>
+            
+            <div class="user-inputs">
+                <div class="input-group">
+                    <label for="channel-name">Twitch Channel Name:</label>
+                    <input type="text" id="channel-name" placeholder="Enter Twitch channel name">
                 </div>
-                <iframe class="frame hidden"></iframe>
+                
+                <div class="input-group">
+                    <label for="team-number">FRC Team Number:</label>
+                    <input type="text" id="team-number" placeholder="Enter team number (e.g. 254)">
+                </div>
+                
+                <div class="input-group">
+                    <label for="nexus-event-id">Nexus Event ID (Optional):</label>
+                    <input type="text" id="nexus-event-id" placeholder="Enter Nexus event ID (e.g. 2023caoc)">
+                </div>
             </div>
             
-            <!-- Top-right cell -->
-            <div class="cell" id="cell1">
-                <div class="url-input-container">
-                    <input type="text" class="url-input" placeholder="Enter URL (e.g., https://example.com)">
-                    <button class="load-url-btn">Load</button>
+            <div class="preview-urls">
+                <h3>URLs that will be loaded:</h3>
+                <div class="url-preview">
+                    <span class="position">Top Left:</span>
+                    <span class="url" id="url0-preview"></span>
                 </div>
-                <iframe class="frame hidden"></iframe>
-            </div>
-            
-            <!-- Bottom-left cell -->
-            <div class="cell" id="cell2">
-                <div class="url-input-container">
-                    <input type="text" class="url-input" placeholder="Enter URL (e.g., https://example.com)">
-                    <button class="load-url-btn">Load</button>
+                <div class="url-preview">
+                    <span class="position">Top Right:</span>
+                    <span class="url" id="url1-preview">https://frc.nexus</span>
                 </div>
-                <iframe class="frame hidden"></iframe>
-            </div>
-            
-            <!-- Bottom-right cell -->
-            <div class="cell" id="cell3">
-                <div class="url-input-container">
-                    <input type="text" class="url-input" placeholder="Enter URL (e.g., https://example.com)">
-                    <button class="load-url-btn">Load</button>
+                <div class="url-preview">
+                    <span class="position">Bottom Left:</span>
+                    <span class="url" id="url2-preview"></span>
                 </div>
-                <iframe class="frame hidden"></iframe>
+                <div class="url-preview">
+                    <span class="position">Bottom Right:</span>
+                    <span class="url" id="url3-preview"></span>
+                </div>
             </div>
-            
-            <!-- Vertical resizer (spans entire height) -->
-            <div class="v-resizer" id="v-resize"></div>
-            
-            <!-- Horizontal resizer (spans entire width) -->
-            <div class="h-resizer" id="h-resize"></div>
-            
-            <!-- Intersection point -->
-            <div class="intersection-resizer"></div>
+
+            <div class="setup-actions">
+                <button id="load-grid-btn">Load Dashboard</button>
+            </div>
         </div>
     </div>
+
+    <div id="grid-container" class="hidden">
+        <div class="resizable-grid">
+            <!-- Grid cells without Edit Settings buttons -->
+            <div class="grid-cell" id="cell0">
+                <iframe class="frame"></iframe>
+            </div>
+            
+            <div class="grid-cell" id="cell1">
+                <iframe class="frame"></iframe>
+            </div>
+            
+            <div class="grid-cell" id="cell2">
+                <iframe class="frame"></iframe>
+            </div>
+            
+            <div class="grid-cell" id="cell3">
+                <iframe class="frame"></iframe>
+            </div>
+            
+            <!-- Center resize dot -->
+            <div class="resize-dot" id="resize-dot">
+                <div class="dot-handle"></div>
+            </div>
+        </div>
+        <button id="back-to-setup" class="floating-button">⚙️ Change Settings</button>
+    </div>
+
     <script src="script.js"></script>
 </body>
 </html>
